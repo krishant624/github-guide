@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GitHub Guide — Basics &amp; Advanced</title>
-<meta name="description" content="Practical Git and GitHub guide: solid basics, then advanced workflows, Actions, security, and practice checklists.">
+<meta name="description" content="Practical Git and GitHub guide: command examples, then quizzes — basics through advanced workflows.">
 <style>
 :root {
   --bg: #f3f5fa;
@@ -49,7 +49,7 @@ body {
     var(--bg);
   color: var(--text); line-height: 1.72; font-size: 18px;
 }
-code, kbd, pre, .mono, .copy-btn, .search input, .btn, .brand, nav, .toc a, th, td, .track-btn, .check label {
+code, kbd, pre, .mono, .copy-btn, .search input, .btn, .brand, nav, .toc a, th, td, .track-btn, .check label, .quiz button {
   font-family: var(--font-mono);
 }
 h1, h2, h3, h4, .brand, .hero .eyebrow, .track-label { font-family: var(--font-sans); }
@@ -135,6 +135,26 @@ pre code { background: none; padding: 0; color: inherit; }
 .check h4 { margin: 0 0 .55rem; font-size: .95rem; }
 .check label { display: flex; gap: .55rem; align-items: flex-start; margin: .4rem 0; font-size: .86rem; cursor: pointer; color: var(--text); }
 .check input { margin-top: .2rem; }
+.example {
+  margin: 1rem 0; padding: .9rem 1rem; border-radius: 14px;
+  border-left: 4px solid var(--accent2);
+  background: color-mix(in srgb, var(--accent2) 8%, var(--bg2));
+  border: 1px solid var(--border); border-left-width: 4px; border-left-color: var(--accent2);
+}
+.example h4 { margin: 0 0 .4rem; font-size: .92rem; font-family: var(--font-sans); color: var(--accent2); }
+.example p { margin: .35rem 0; font-size: .95rem; }
+.example ol { margin: .4rem 0 .2rem; }
+.quiz { margin: 1.1rem 0; padding: 1rem; border-radius: 14px; border: 1px solid var(--border); background: var(--bg); }
+.quiz h4 { margin: 0 0 .5rem; font-size: .98rem; font-family: var(--font-sans); }
+.quiz .q { margin: .85rem 0 .35rem; font-weight: 650; font-family: var(--font-sans); font-size: .95rem; }
+.quiz button {
+  display: block; width: 100%; text-align: left; margin: .3rem 0; padding: .55rem .7rem;
+  border-radius: 10px; border: 1px solid var(--border); background: var(--bg2); color: var(--text); cursor: pointer; font-size: .82rem;
+}
+.quiz button:hover { border-color: var(--accent); }
+.quiz button.correct { border-color: var(--good); background: color-mix(in srgb, var(--good) 18%, var(--bg2)); }
+.quiz button.wrong { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 14%, var(--bg2)); }
+.quiz .feedback { min-height: 1.2em; margin-top: .4rem; font-size: .86rem; color: var(--muted); }
 .adv-banner {
   margin: 2rem 0 0; padding: 1rem 1.1rem; border-radius: 14px;
   border: 1px dashed color-mix(in srgb, var(--accent2) 50%, var(--border));
@@ -187,7 +207,7 @@ section[hidden] { display: none !important; }
     <div class="progress-box" aria-live="polite">
       <div>Reading progress: <strong id="progText">0%</strong></div>
       <div class="bar" aria-hidden="true"><i id="progBar"></i></div>
-      <div style="margin-top:.45rem;color:var(--side-muted)">Checklists save in this browser.</div>
+      <div style="margin-top:.45rem;color:var(--side-muted)">Checklists and quizzes save in this browser.</div>
     </div>
     <h2>Contents</h2>
     <ol class="toc" id="toc"></ol>
@@ -197,7 +217,7 @@ section[hidden] { display: none !important; }
       <div class="hero" id="top">
         <p class="eyebrow">Self-contained · Offline · GitHub Pages</p>
         <h1>GitHub Guide: Basics, then Advanced</h1>
-        <p class="lead">Learn GitHub with clear “why → how,” real commands, diagrams, and practice checklists. Finish the basics track, then keep going into advanced workflows.</p>
+        <p class="lead">Learn GitHub with clear “why → how,” real commands, worked examples of how you’d use them, then short quizzes. Finish the basics track, then keep going into advanced workflows.</p>
         <p class="meta">Live: <a href="https://krishant624.github.io/github-guide/">krishant624.github.io/github-guide</a></p>
         <div class="pillrow">
           <span class="pill">Basics 1–13</span>
@@ -252,6 +272,18 @@ cat ~/.ssh/id_ed25519.pub
 # paste into GitHub → Settings → SSH and GPG keys
 ssh -T git@github.com</code></pre></div>
         <div class="callout warn"><strong>Warning</strong><p>For HTTPS, use a Personal Access Token—not your GitHub password. Never commit tokens.</p></div>
+        <div class="example">
+          <h4>How you’d use this</h4>
+          <p>New laptop day: install Git, set your name/email once, generate an SSH key, paste the <code>.pub</code> file into GitHub, then run <code>ssh -T git@github.com</code>. After that, <code>git clone</code> and <code>git push</code> stop asking for a password.</p>
+        </div>
+        <div class="quiz" data-quiz="setup">
+          <h4>Check your understanding</h4>
+          <div class="q">You set up SSH successfully. Which remote URL style should you prefer when cloning?</div>
+          <button type="button" data-ok="1">git@github.com:USER/REPO.git</button>
+          <button type="button" data-ok="0">https://github.com/USER/REPO.git (and type your account password)</button>
+          <button type="button" data-ok="0">ftp://github.com/USER/REPO</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
         <div class="check" data-check="setup">
           <h4>Practice checklist</h4>
           <label><input type="checkbox"> Git installed and <code>user.name</code> / <code>user.email</code> set</label>
@@ -275,6 +307,18 @@ git branch -M main
 git remote add origin git@github.com:USERNAME/REPO.git
 git push -u origin main</code></pre></div>
         <p>Add <strong>README.md</strong> (what/how), <strong>.gitignore</strong> (what not to track), and a <strong>LICENSE</strong> when others may use the code.</p>
+        <div class="example">
+          <h4>How you’d use this</h4>
+          <p>GitHub → New repository → copy the SSH URL → on your PC run <code>git clone …</code> → <code>cd</code> into the folder → open it in your editor. Or start with <code>git init</code> locally, make the first commit, add <code>origin</code>, then <code>git push -u origin main</code>.</p>
+        </div>
+        <div class="quiz" data-quiz="create-clone">
+          <h4>Check your understanding</h4>
+          <div class="q">You already have files on your PC and a new empty repo on GitHub. What’s the usual order?</div>
+          <button type="button" data-ok="1">git init → add/commit → remote add origin → push -u origin main</button>
+          <button type="button" data-ok="0">git push first, then git init</button>
+          <button type="button" data-ok="0">Only download ZIP forever; never use git</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
       </section>
 
       <section id="daily" data-track="basics" data-keywords="status add commit push pull fetch log diff daily">
@@ -291,6 +335,24 @@ git log --oneline --graph -n 15</code></pre></div>
           <li><code>fetch</code> downloads updates; <code>pull</code> fetches and integrates.</li>
           <li><code>diff</code> / <code>diff --staged</code> show unstaged vs staged patches.</li>
         </ul>
+        <div class="example">
+          <h4>How you’d use this</h4>
+          <p>You fixed a typo in <code>README.md</code>:</p>
+          <ol>
+            <li><code>git status</code> — see README.md modified</li>
+            <li><code>git diff</code> — confirm the typo fix looks right</li>
+            <li><code>git add README.md</code> then <code>git commit -m "Fix typo in setup section"</code></li>
+            <li><code>git push</code> — GitHub now has your commit</li>
+          </ol>
+        </div>
+        <div class="quiz" data-quiz="daily">
+          <h4>Check your understanding</h4>
+          <div class="q">You edited two files but only want one in this commit. What do you do?</div>
+          <button type="button" data-ok="0">git add . then commit (always)</button>
+          <button type="button" data-ok="1">git add only the file you want, then commit</button>
+          <button type="button" data-ok="0">git push without committing</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
         <div class="check" data-check="daily">
           <h4>Practice checklist</h4>
           <label><input type="checkbox"> Make a tiny edit, commit with a clear message, and push</label>
@@ -337,6 +399,18 @@ title = "Home"
 # edit to the correct final lines, then:
 git add config.toml
 git merge --continue   # or: git rebase --continue</code></pre></div>
+        <div class="example">
+          <h4>How you’d use this</h4>
+          <p>Building search: create <code>feature/add-search</code> from updated <code>main</code>, commit there, push the branch. If <code>main</code> moved while you worked, merge or rebase <code>origin/main</code> into your feature branch, fix any conflict markers, then continue.</p>
+        </div>
+        <div class="quiz" data-quiz="branching">
+          <h4>Check your understanding</h4>
+          <div class="q">You see <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> in a file after merging. What’s the next correct step?</div>
+          <button type="button" data-ok="0">git push --force immediately</button>
+          <button type="button" data-ok="1">Edit the file to the correct final content, git add it, then merge/rebase --continue</button>
+          <button type="button" data-ok="0">Delete the repository and start over</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
       </section>
 
       <section id="pull-requests" data-track="basics" data-keywords="pull request pr review squash merge">
@@ -350,6 +424,18 @@ git merge --continue   # or: git rebase --continue</code></pre></div>
             <tr><td>Rebase and merge</td><td>Linear history; commits already tidy</td></tr>
           </tbody>
         </table>
+        <div class="example">
+          <h4>How you’d use this</h4>
+          <p>Your feature branch has 12 “wip” commits. For a solo project or a team that likes a clean <code>main</code>, open the PR and choose <strong>Squash and merge</strong> so <code>main</code> gets one clear commit like “Add sidebar search.”</p>
+        </div>
+        <div class="quiz" data-quiz="pr">
+          <h4>Check your understanding</h4>
+          <div class="q">Which merge strategy turns a messy feature branch into a single commit on main?</div>
+          <button type="button" data-ok="0">Create a merge commit</button>
+          <button type="button" data-ok="1">Squash and merge</button>
+          <button type="button" data-ok="0">Rebase and merge</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
       </section>
 
       <section id="collaboration" data-track="basics" data-keywords="fork upstream issues labels milestones projects">
@@ -371,6 +457,18 @@ git revert abc1234               # undo with a new commit (safe on main)
 git stash -u && git stash pop
 git reflog                       # find “lost” commits</code></pre></div>
         <div class="callout warn"><strong>Warning</strong><p><code>reset --hard</code> destroys uncommitted work. Prefer restore / revert / reflog until you’re sure.</p></div>
+        <div class="example">
+          <h4>How you’d use this</h4>
+          <p>Bad commit already on <code>main</code> and others may have pulled it? Run <code>git revert abc1234</code> and push — history stays honest. Only “oops, wrong commit message, not pushed yet”? Use <code>git commit --amend</code>.</p>
+        </div>
+        <div class="quiz" data-quiz="undo">
+          <h4>Check your understanding</h4>
+          <div class="q">A bad commit is already on shared main. Safest fix?</div>
+          <button type="button" data-ok="0">git reset --hard and force-push main</button>
+          <button type="button" data-ok="1">git revert &lt;sha&gt; and push the new commit</button>
+          <button type="button" data-ok="0">Delete .git</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
       </section>
 
       <section id="actions" data-track="basics" data-keywords="actions ci workflow yaml">
@@ -426,6 +524,18 @@ git switch -c recover-work
 ssh -T git@github.com
 git remote -v</code></pre></div>
         <p>Conflicts: edit markers → <code>git add</code> → <code>merge --continue</code> / <code>rebase --continue</code> (or <code>--abort</code>).</p>
+        <div class="example">
+          <h4>How you’d use this</h4>
+          <p><code>git push</code> says “rejected”. Someone else pushed first. You run <code>git pull --rebase origin main</code>, fix conflicts if any, then <code>git push</code> again. You’re not stuck—you’re catching up.</p>
+        </div>
+        <div class="quiz" data-quiz="troubleshooting">
+          <h4>Check your understanding</h4>
+          <div class="q">Push rejected because the remote is ahead. First move?</div>
+          <button type="button" data-ok="0">git push --force</button>
+          <button type="button" data-ok="1">git pull --rebase (or pull), resolve conflicts, then push</button>
+          <button type="button" data-ok="0">Change the remote URL randomly</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
       </section>
 
       <section id="cheatsheet" data-track="basics" data-keywords="cheat sheet reference commands">
@@ -442,6 +552,18 @@ git remote -v</code></pre></div>
             <tr><td><code>gh pr create</code></td><td>Open a PR</td></tr>
           </tbody>
         </table>
+        <div class="example">
+          <h4>How you’d use this</h4>
+          <p>Keep this table open while working. Typical day: <code>status</code> → <code>add</code> → <code>commit</code> → <code>push</code>. Stuck? <code>reflog</code> or <code>stash</code> before trying anything destructive.</p>
+        </div>
+        <div class="quiz" data-quiz="basics-final">
+          <h4>Basics wrap-up</h4>
+          <div class="q">You committed to main by mistake locally (not pushed). Safest cleanup?</div>
+          <button type="button" data-ok="0">git push --force</button>
+          <button type="button" data-ok="1">Create a branch from current HEAD, then reset main to origin/main</button>
+          <button type="button" data-ok="0">Delete the .git folder</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
       </section>
 
       <!-- ========== ADVANCED ========== -->
@@ -567,6 +689,18 @@ updates:
         <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git tag -a v1.4.0 -m "v1.4.0"
 git push origin v1.4.0
 gh release create v1.4.0 --generate-notes</code></pre></div>
+        <div class="example">
+          <h4>How you’d use this</h4>
+          <p>Shipping v1.4.0: merge the release PR, tag with <code>git tag -a v1.4.0 -m "v1.4.0"</code>, push the tag, then <code>gh release create v1.4.0 --generate-notes</code> so GitHub lists the PR titles for you.</p>
+        </div>
+        <div class="quiz" data-quiz="adv-collab">
+          <h4>Check your understanding</h4>
+          <div class="q">Work is half-done but you want early feedback without a formal review request. Best option?</div>
+          <button type="button" data-ok="1">Open a draft pull request</button>
+          <button type="button" data-ok="0">Force-push to main</button>
+          <button type="button" data-ok="0">Email a zip of your folder</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
         <div class="check" data-check="adv-collab">
           <h4>Practice checklist</h4>
           <label><input type="checkbox"> Open a draft PR and convert it to ready when review-ready</label>
@@ -597,10 +731,22 @@ gh alias set prc 'pr create --fill'</code></pre></div>
         </ul>
         <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># CNAME file at repo root for custom domain
 docs.example.com</code></pre></div>
+        <div class="example">
+          <h4>How you’d use this</h4>
+          <p>Deploying a cloud app from Actions: grant <code>id-token: write</code>, use an OIDC login action for AWS/Azure/GCP, deploy in an Environment named <code>production</code> with required reviewers—no long-lived access key in the repo.</p>
+        </div>
+        <div class="quiz" data-quiz="advanced-final">
+          <h4>Advanced wrap-up</h4>
+          <div class="q">Best way to deploy from Actions without storing long-lived cloud keys?</div>
+          <button type="button" data-ok="0">Commit the cloud key encrypted in the repo</button>
+          <button type="button" data-ok="1">Use OIDC federation with short-lived tokens</button>
+          <button type="button" data-ok="0">Put the key in the README</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
       </section>
 
       <footer>
-        <p>Basics + Advanced in one offline HTML file. Source: <a href="https://github.com/krishant624/github-guide">krishant624/github-guide</a>. Progress and checklist state stay in localStorage on this device.</p>
+        <p>Basics + Advanced in one offline HTML file. Source: <a href="https://github.com/krishant624/github-guide">krishant624/github-guide</a>. Progress, checklists, and quizzes stay in localStorage on this device.</p>
       </footer>
     </main>
   </div>
@@ -729,6 +875,34 @@ docs.example.com</code></pre></div>
         const state = {};
         box.querySelectorAll('input[type=checkbox]').forEach((el, j) => { state[j] = el.checked; });
         localStorage.setItem(key, JSON.stringify(state));
+        updateProgress();
+      });
+    });
+  });
+
+  // Quizzes (after worked examples)
+  document.querySelectorAll('.quiz').forEach((quiz) => {
+    const key = 'gh-guide-quiz-' + quiz.dataset.quiz;
+    const feedback = quiz.querySelector('.feedback');
+    const buttons = [...quiz.querySelectorAll('button[data-ok]')];
+    const saved = localStorage.getItem(key);
+    if (saved != null) {
+      buttons.forEach((b) => {
+        b.disabled = true;
+        if (b.dataset.ok === '1') b.classList.add('correct');
+      });
+      feedback.textContent = saved === '1' ? 'Correct — saved.' : 'Review the example above, then keep going.';
+    }
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const ok = btn.dataset.ok === '1';
+        buttons.forEach((b) => {
+          b.disabled = true;
+          if (b.dataset.ok === '1') b.classList.add('correct');
+        });
+        if (!ok) btn.classList.add('wrong');
+        feedback.textContent = ok ? 'Correct.' : 'Not quite — re-read the “How you’d use this” example above.';
+        localStorage.setItem(key, ok ? '1' : '0');
         updateProgress();
       });
     });
