@@ -3,216 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GitHub Guide — From Zero to Confident</title>
-<meta name="description" content="An in-depth, practical guide to Git and GitHub for beginners who know basic command-line usage.">
+<title>GitHub Guide — Basics &amp; Advanced</title>
+<meta name="description" content="Practical Git and GitHub guide: solid basics, then advanced workflows, Actions, security, and practice checklists.">
 <style>
 :root {
-  --bg: #f6f7fb;
+  --bg: #f3f5fa;
   --bg2: #ffffff;
-  --text: #1a1f36;
-  --muted: #5b647a;
-  --border: #d8deea;
-  --accent: #2563eb;
-  --accent-soft: #dbeafe;
-  --side: #0f172a;
-  --side-text: #e2e8f0;
-  --side-muted: #94a3b8;
-  --side-active: #38bdf8;
-  --code-bg: #0b1220;
-  --code-text: #e2e8f0;
-  --tip: #065f46;
-  --tip-bg: #ecfdf5;
-  --warn: #92400e;
-  --warn-bg: #fffbeb;
-  --note: #1e3a8a;
-  --note-bg: #eff6ff;
-  --shadow: 0 8px 24px rgba(15, 23, 42, .08);
-  --radius: 12px;
-  --max: 800px;
-  --side-w: 280px;
+  --text: #152033;
+  --muted: #5a6578;
+  --border: #d5dceb;
+  --accent: #1d4ed8;
+  --accent2: #0f766e;
+  --accent-soft: #e8eefc;
+  --side: #0b1220;
+  --side-text: #e8eef8;
+  --side-muted: #93a0b8;
+  --side-active: #5eead4;
+  --code-bg: #0c1324;
+  --code-text: #e5edf8;
+  --tip: #065f46; --tip-bg: #ecfdf5;
+  --warn: #9a3412; --warn-bg: #fff7ed;
+  --note: #1e40af; --note-bg: #eff6ff;
+  --good: #15803d; --bad: #b91c1c;
+  --shadow: 0 12px 32px rgba(15,23,42,.08);
+  --radius: 14px; --max: 820px; --side-w: 300px;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-sans: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", SFMono-Regular, Menlo, Consolas, monospace;
 }
 [data-theme="dark"] {
-  --bg: #0b1020;
-  --bg2: #121a2f;
-  --text: #e8ecf8;
-  --muted: #9aa6c2;
-  --border: #2a3555;
-  --accent: #60a5fa;
-  --accent-soft: #1e293b;
-  --side: #070b16;
-  --side-text: #e2e8f0;
-  --side-muted: #8b9bb8;
-  --side-active: #7dd3fc;
-  --code-bg: #060a14;
-  --code-text: #e2e8f0;
-  --tip: #6ee7b7;
-  --tip-bg: #052e24;
-  --warn: #fbbf24;
-  --warn-bg: #2a1d05;
-  --note: #93c5fd;
-  --note-bg: #0c1a33;
-  --shadow: 0 10px 28px rgba(0,0,0,.35);
+  --bg: #080d18; --bg2: #10192c; --text: #e8eef8; --muted: #9aa8c2;
+  --border: #273352; --accent: #60a5fa; --accent2: #2dd4bf; --accent-soft: #172033;
+  --side: #050910; --side-text: #e8eef8; --side-muted: #8b9bb4; --side-active: #5eead4;
+  --code-bg: #060a14; --code-text: #e5edf8;
+  --tip: #6ee7b7; --tip-bg: #052e24; --warn: #fdba74; --warn-bg: #2a1608;
+  --note: #93c5fd; --note-bg: #0b1a33; --good: #4ade80; --bad: #f87171;
+  --shadow: 0 14px 36px rgba(0,0,0,.4);
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
 body {
-  margin: 0;
-  font-family: Georgia, "Times New Roman", Times, serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-  font-size: 18px;
+  margin: 0; font-family: var(--font-serif); background:
+    radial-gradient(900px 420px at 10% -10%, color-mix(in srgb, var(--accent) 14%, transparent), transparent),
+    radial-gradient(700px 360px at 100% 0%, color-mix(in srgb, var(--accent2) 12%, transparent), transparent),
+    var(--bg);
+  color: var(--text); line-height: 1.72; font-size: 18px;
 }
-code, kbd, pre, .mono, .copy-btn, .search input, .btn, .brand, nav, .toc a, th, td {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+code, kbd, pre, .mono, .copy-btn, .search input, .btn, .brand, nav, .toc a, th, td, .track-btn, .check label {
+  font-family: var(--font-mono);
 }
+h1, h2, h3, h4, .brand, .hero .eyebrow, .track-label { font-family: var(--font-sans); }
 a { color: var(--accent); }
-a:focus-visible, button:focus-visible, input:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
-}
-.skip {
-  position: absolute; left: -999px; top: 0;
-  background: var(--accent); color: #fff; padding: .5rem 1rem; z-index: 100;
-}
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -999px; top: 0; background: var(--accent); color: #fff; padding: .5rem 1rem; z-index: 100; }
 .skip:focus { left: 0; }
-/* top bar */
 .topbar {
-  position: sticky; top: 0; z-index: 40;
-  display: flex; align-items: center; gap: .75rem;
-  padding: .7rem 1rem;
-  background: color-mix(in srgb, var(--bg2) 92%, transparent);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: .65rem;
+  padding: .65rem .9rem; background: color-mix(in srgb, var(--bg2) 90%, transparent);
+  backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
 }
-.brand { font-weight: 700; text-decoration: none; color: var(--text); font-size: .95rem; letter-spacing: .02em; }
-.burger {
-  display: none; border: 1px solid var(--border); background: var(--bg2);
-  color: var(--text); border-radius: 10px; width: 42px; height: 42px; font-size: 1.2rem; cursor: pointer;
-}
-.search { position: relative; flex: 1; max-width: 420px; margin-left: auto; }
-.search input {
-  width: 100%; padding: .65rem .85rem; border-radius: 10px;
-  border: 1px solid var(--border); background: var(--bg2); color: var(--text); font-size: .9rem;
-}
-.search-results {
-  display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
-  background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
-  max-height: 55vh; overflow: auto; box-shadow: var(--shadow); z-index: 50;
-}
+.brand { font-weight: 750; text-decoration: none; color: var(--text); font-size: .92rem; white-space: nowrap; }
+.burger { display: none; border: 1px solid var(--border); background: var(--bg2); color: var(--text); border-radius: 10px; width: 42px; height: 42px; font-size: 1.15rem; cursor: pointer; }
+.search { position: relative; flex: 1; max-width: 380px; margin-left: auto; }
+.search input { width: 100%; padding: .62rem .8rem; border-radius: 10px; border: 1px solid var(--border); background: var(--bg2); color: var(--text); font-size: .86rem; }
+.search-results { display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; max-height: 55vh; overflow: auto; box-shadow: var(--shadow); z-index: 50; }
 .search-results.show { display: block; }
-.search-results a {
-  display: block; padding: .7rem .9rem; text-decoration: none; color: var(--text);
-  border-bottom: 1px solid var(--border); font-size: .85rem;
-}
-.search-results a:hover, .search-results a:focus { background: var(--accent-soft); }
-.btn {
-  border: 1px solid var(--border); background: var(--bg2); color: var(--text);
-  border-radius: 10px; padding: .55rem .8rem; cursor: pointer; font-size: .85rem;
-}
+.search-results a { display: block; padding: .65rem .85rem; text-decoration: none; color: var(--text); border-bottom: 1px solid var(--border); font-size: .8rem; }
+.search-results a:hover { background: var(--accent-soft); }
+.btn { border: 1px solid var(--border); background: var(--bg2); color: var(--text); border-radius: 10px; padding: .5rem .75rem; cursor: pointer; font-size: .8rem; }
 .btn:hover { border-color: var(--accent); }
-/* layout */
 .layout { display: grid; grid-template-columns: var(--side-w) 1fr; min-height: calc(100vh - 58px); }
-.sidebar {
-  position: sticky; top: 58px; height: calc(100vh - 58px); overflow: auto;
-  background: var(--side); color: var(--side-text); padding: 1.1rem .85rem 2rem;
-  border-right: 1px solid var(--border);
-}
-.sidebar h2 {
-  margin: 0 0 .75rem; font-size: .72rem; text-transform: uppercase; letter-spacing: .12em;
-  color: var(--side-muted); font-family: ui-monospace, Menlo, Consolas, monospace;
-}
+.sidebar { position: sticky; top: 58px; height: calc(100vh - 58px); overflow: auto; background: var(--side); color: var(--side-text); padding: 1rem .8rem 2rem; border-right: 1px solid var(--border); }
+.sidebar h2, .track-label { margin: .85rem 0 .45rem; font-size: .68rem; text-transform: uppercase; letter-spacing: .14em; color: var(--side-muted); }
+.track-btns { display: flex; gap: .35rem; margin-bottom: .7rem; }
+.track-btn { flex: 1; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: var(--side-text); border-radius: 8px; padding: .4rem .2rem; cursor: pointer; font-size: .68rem; }
+.track-btn.active { background: var(--side-active); color: #042f2e; font-weight: 700; border-color: transparent; }
+.progress-box { margin: .2rem 0 1rem; padding: .75rem; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); font-size: .78rem; }
+.progress-box .bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; margin-top: .45rem; }
+.progress-box .bar > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .35s; }
 .toc { list-style: none; margin: 0; padding: 0; }
-.toc a {
-  display: block; color: var(--side-muted); text-decoration: none;
-  padding: .45rem .6rem; border-radius: 8px; font-size: .82rem; line-height: 1.35;
-}
+.toc a { display: block; color: var(--side-muted); text-decoration: none; padding: .42rem .55rem; border-radius: 8px; font-size: .78rem; line-height: 1.35; }
 .toc a:hover { color: var(--side-text); background: rgba(255,255,255,.05); }
-.toc a.active {
-  color: var(--side); background: var(--side-active); font-weight: 700;
-}
-.content-wrap { padding: 1.5rem 1.25rem 4rem; }
-main {
-  max-width: var(--max); margin: 0 auto;
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 18px; padding: 2rem 1.6rem 3rem; box-shadow: var(--shadow);
-}
-h1, h2, h3, h4 {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  line-height: 1.25; letter-spacing: -.01em;
-}
-h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin: 0 0 .6rem; }
-h2 {
-  font-size: 1.55rem; margin: 2.4rem 0 .8rem; padding-top: .4rem;
-  border-top: 1px solid var(--border);
-}
-h2:first-of-type { border-top: 0; margin-top: 1.5rem; }
-h3 { font-size: 1.15rem; margin: 1.6rem 0 .5rem; }
-p { margin: .75rem 0; }
-ul, ol { padding-left: 1.3rem; }
-li { margin: .35rem 0; }
-.lead { color: var(--muted); font-size: 1.08rem; }
+.toc a.active { color: #042f2e; background: var(--side-active); font-weight: 700; }
+.toc .group { margin-top: .7rem; padding: .35rem .55rem; color: var(--side-muted); font-size: .65rem; text-transform: uppercase; letter-spacing: .12em; }
+.content-wrap { padding: 1.4rem 1.15rem 4rem; }
+main { max-width: var(--max); margin: 0 auto; background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 2rem 1.55rem 3rem; box-shadow: var(--shadow); }
+h1 { font-size: clamp(1.85rem, 3.2vw, 2.45rem); margin: 0 0 .55rem; letter-spacing: -.02em; line-height: 1.15; }
+h2 { font-size: 1.48rem; margin: 2.3rem 0 .75rem; padding-top: .55rem; border-top: 1px solid var(--border); }
+h2:first-of-type { border-top: 0; margin-top: 1.3rem; }
+h3 { font-size: 1.12rem; margin: 1.45rem 0 .45rem; }
+p { margin: .72rem 0; }
+ul, ol { padding-left: 1.25rem; }
+li { margin: .32rem 0; }
+.lead { color: var(--muted); font-size: 1.05rem; }
 .hero {
-  border-radius: 16px; padding: 1.4rem 1.2rem;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, transparent), transparent),
-              var(--accent-soft);
-  border: 1px solid var(--border); margin-bottom: 1.2rem;
-}
-.meta { color: var(--muted); font-size: .92rem; }
-table {
-  width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .92rem;
-  display: block; overflow-x: auto;
-}
-th, td { border: 1px solid var(--border); padding: .55rem .65rem; text-align: left; vertical-align: top; }
-th { background: var(--accent-soft); }
-.prewrap { position: relative; margin: 1rem 0; }
-pre {
-  margin: 0; padding: 1rem 1rem 1rem 1rem; overflow-x: auto;
-  background: var(--code-bg); color: var(--code-text);
-  border-radius: var(--radius); border: 1px solid var(--border); font-size: .86rem; line-height: 1.55;
-}
-.copy-btn {
-  position: absolute; top: .55rem; right: .55rem;
-  background: #1f2937; color: #fff; border: 1px solid #334155;
-  border-radius: 8px; padding: .25rem .55rem; font-size: .72rem; cursor: pointer;
-}
-.copy-btn:hover { background: #334155; }
-code {
-  background: color-mix(in srgb, var(--accent-soft) 80%, var(--bg2));
-  padding: .1rem .35rem; border-radius: 6px; font-size: .9em;
-}
-pre code { background: none; padding: 0; color: inherit; }
-.callout {
-  border-radius: 12px; padding: .9rem 1rem; margin: 1rem 0;
+  border-radius: 18px; padding: 1.45rem 1.25rem; margin-bottom: 1.1rem;
+  background:
+    radial-gradient(700px 220px at 0% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent),
+    radial-gradient(500px 200px at 100% 100%, color-mix(in srgb, var(--accent2) 18%, transparent), transparent),
+    var(--accent-soft);
   border: 1px solid var(--border);
 }
-.callout strong { display: inline-block; margin-right: .35rem; }
+.hero .eyebrow { font-size: .75rem; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); font-weight: 700; margin: 0 0 .45rem; }
+.meta { color: var(--muted); font-size: .9rem; }
+.pillrow { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .9rem; }
+.pill { font-family: var(--font-sans); font-size: .78rem; font-weight: 650; padding: .28rem .65rem; border-radius: 999px; border: 1px solid var(--border); background: var(--bg2); }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .88rem; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--border); padding: .5rem .6rem; text-align: left; vertical-align: top; }
+th { background: var(--accent-soft); }
+.prewrap { position: relative; margin: 1rem 0; }
+pre { margin: 0; padding: 1rem; overflow-x: auto; background: var(--code-bg); color: var(--code-text); border-radius: var(--radius); border: 1px solid var(--border); font-size: .84rem; line-height: 1.55; }
+.copy-btn { position: absolute; top: .5rem; right: .5rem; background: #1f2937; color: #fff; border: 1px solid #334155; border-radius: 8px; padding: .22rem .5rem; font-size: .7rem; cursor: pointer; }
+.copy-btn:hover { background: #334155; }
+code { background: color-mix(in srgb, var(--accent-soft) 85%, var(--bg2)); padding: .08rem .32rem; border-radius: 6px; font-size: .9em; }
+pre code { background: none; padding: 0; color: inherit; }
+.callout { border-radius: 12px; padding: .85rem 1rem; margin: 1rem 0; border: 1px solid var(--border); }
+.callout strong { margin-right: .3rem; }
 .callout.tip { background: var(--tip-bg); color: var(--tip); }
 .callout.warn { background: var(--warn-bg); color: var(--warn); }
 .callout.note { background: var(--note-bg); color: var(--note); }
-.callout p { margin: .35rem 0 0; color: var(--text); }
-.kbd {
-  border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 6px;
-  padding: .05rem .35rem; font-size: .85em; background: var(--bg);
+.callout p { margin: .3rem 0 0; color: var(--text); }
+.diagram {
+  margin: 1rem 0; padding: 1rem; border-radius: 14px; border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--accent-soft), var(--bg2)); font-family: var(--font-mono); font-size: .82rem;
 }
-footer {
-  margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--border);
-  color: var(--muted); font-size: .92rem;
+.diagram svg { width: 100%; height: auto; display: block; max-width: 640px; margin: 0 auto; }
+.diagram figcaption { margin-top: .65rem; color: var(--muted); font-family: var(--font-sans); font-size: .86rem; text-align: center; }
+.check {
+  margin: 1rem 0; padding: .9rem 1rem; border: 1px solid var(--border); border-radius: 14px; background: var(--bg);
 }
-.backdrop {
-  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 30;
+.check h4 { margin: 0 0 .55rem; font-size: .95rem; }
+.check label { display: flex; gap: .55rem; align-items: flex-start; margin: .4rem 0; font-size: .86rem; cursor: pointer; color: var(--text); }
+.check input { margin-top: .2rem; }
+.adv-banner {
+  margin: 2rem 0 0; padding: 1rem 1.1rem; border-radius: 14px;
+  border: 1px dashed color-mix(in srgb, var(--accent2) 50%, var(--border));
+  background: color-mix(in srgb, var(--accent2) 10%, var(--bg2));
 }
-@media (max-width: 900px) {
+.tag { display: inline-block; font-family: var(--font-sans); font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .15rem .45rem; border-radius: 999px; background: color-mix(in srgb, var(--accent2) 18%, transparent); color: var(--accent2); margin-left: .4rem; vertical-align: middle; }
+footer { margin-top: 2.4rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; }
+.backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 30; }
+section[hidden] { display: none !important; }
+@media (max-width: 920px) {
   .burger { display: inline-flex; align-items: center; justify-content: center; }
   .layout { grid-template-columns: 1fr; }
-  .sidebar {
-    position: fixed; left: 0; top: 58px; bottom: 0; width: min(86vw, 320px);
-    transform: translateX(-105%); transition: transform .25s ease; z-index: 35;
-  }
+  .sidebar { position: fixed; left: 0; top: 58px; bottom: 0; width: min(88vw, 330px); transform: translateX(-105%); transition: transform .25s ease; z-index: 35; }
   .sidebar.open { transform: translateX(0); }
   .backdrop.show { display: block; }
-  main { padding: 1.4rem 1rem 2.5rem; border-radius: 14px; }
-  .content-wrap { padding: 1rem .75rem 3rem; }
+  main { padding: 1.3rem 1rem 2.4rem; }
+  .content-wrap { padding: 1rem .7rem 3rem; }
+}
+@media print {
+  .topbar, .sidebar, .backdrop, .copy-btn, .burger, .search, #themeToggle, .track-btns, .progress-box { display: none !important; }
+  .layout { display: block; }
+  main { box-shadow: none; border: 0; max-width: none; padding: 0; }
+  a { color: #000; text-decoration: none; }
+  pre { white-space: pre-wrap; }
+  section[hidden] { display: block !important; }
 }
 </style>
 </head>
@@ -222,8 +169,8 @@ footer {
   <button class="burger" id="burger" aria-label="Open table of contents" aria-expanded="false" aria-controls="sidebar">☰</button>
   <a class="brand" href="#top">GitHub Guide</a>
   <div class="search">
-    <label class="visually-hidden" for="q" style="position:absolute;left:-9999px">Search</label>
-    <input id="q" type="search" placeholder="Search sections…" autocomplete="off" aria-label="Search sections">
+    <label for="q" style="position:absolute;left:-9999px">Search</label>
+    <input id="q" type="search" placeholder="Search basics or advanced…" autocomplete="off" aria-label="Search sections">
     <div class="search-results" id="searchResults" role="listbox" aria-label="Search results"></div>
   </div>
   <button class="btn" id="themeToggle" type="button" aria-label="Toggle color theme">Theme</button>
@@ -231,92 +178,95 @@ footer {
 <div class="backdrop" id="backdrop" hidden></div>
 <div class="layout">
   <nav class="sidebar" id="sidebar" aria-label="Table of contents">
+    <p class="track-label">Show</p>
+    <div class="track-btns" role="group" aria-label="Content track">
+      <button type="button" class="track-btn active" data-track="all">All</button>
+      <button type="button" class="track-btn" data-track="basics">Basics</button>
+      <button type="button" class="track-btn" data-track="advanced">Advanced</button>
+    </div>
+    <div class="progress-box" aria-live="polite">
+      <div>Reading progress: <strong id="progText">0%</strong></div>
+      <div class="bar" aria-hidden="true"><i id="progBar"></i></div>
+      <div style="margin-top:.45rem;color:var(--side-muted)">Checklists save in this browser.</div>
+    </div>
     <h2>Contents</h2>
     <ol class="toc" id="toc"></ol>
   </nav>
   <div class="content-wrap">
     <main id="main">
       <div class="hero" id="top">
-        <h1>GitHub Guide: From Zero to Confident</h1>
-        <p class="lead">A practical guide for people who know basic command-line usage but are new to GitHub. Learn why each piece exists, then do it with real commands.</p>
-        <p class="meta">Self-contained · Works offline · Published with GitHub Pages</p>
+        <p class="eyebrow">Self-contained · Offline · GitHub Pages</p>
+        <h1>GitHub Guide: Basics, then Advanced</h1>
+        <p class="lead">Learn GitHub with clear “why → how,” real commands, diagrams, and practice checklists. Finish the basics track, then keep going into advanced workflows.</p>
+        <p class="meta">Live: <a href="https://krishant624.github.io/github-guide/">krishant624.github.io/github-guide</a></p>
+        <div class="pillrow">
+          <span class="pill">Basics 1–13</span>
+          <span class="pill">Advanced A1–A6</span>
+          <span class="pill">No CDN / works offline</span>
+        </div>
       </div>
 
-      <section id="concepts" data-keywords="git github repository commit branch remote fork concepts">
+      <!-- ========== BASICS ========== -->
+      <section id="concepts" data-track="basics" data-keywords="git github repository commit branch remote fork concepts diagram">
         <h2>1. Core concepts</h2>
         <h3>Git vs GitHub</h3>
-        <p><strong>Git</strong> is the version-control tool on your computer. It tracks changes to files as a history of commits.</p>
-        <p><strong>GitHub</strong> is a hosting service for Git repositories. It adds collaboration: pull requests, issues, Actions, Pages, access control.</p>
-        <div class="callout note"><strong>Note</strong><p>You can use Git without GitHub (local-only). You cannot meaningfully use GitHub without Git.</p></div>
-
-        <h3>Repository</h3>
-        <p>A <strong>repository</strong> (repo) is a project folder tracked by Git. It contains your files plus a hidden <code>.git</code> directory with history.</p>
-
-        <h3>Commit</h3>
-        <p>A <strong>commit</strong> is a snapshot of your staged changes, with a message explaining why you made them. Commits form a timeline you can inspect and undo.</p>
-
-        <h3>Branch</h3>
-        <p>A <strong>branch</strong> is a movable pointer to a commit. <code>main</code> (or <code>master</code>) is usually the stable line. Feature branches let you work without breaking main.</p>
-
-        <h3>Remote</h3>
-        <p>A <strong>remote</strong> is a named URL for a copy of the repo elsewhere. By convention, GitHub’s copy is called <code>origin</code>.</p>
-
-        <h3>Fork</h3>
-        <p>A <strong>fork</strong> is your personal copy of someone else’s GitHub repo. You push to your fork, then open a pull request back to the original (upstream).</p>
+        <p><strong>Git</strong> is the version-control tool on your computer. <strong>GitHub</strong> hosts Git repos and adds collaboration (PRs, issues, Actions, Pages).</p>
+        <figure class="diagram" aria-label="Diagram of local Git and GitHub remote">
+          <svg viewBox="0 0 640 180" role="img" aria-label="Laptop with local commits pushing to GitHub origin">
+            <rect x="20" y="30" width="240" height="120" rx="14" fill="currentColor" opacity=".08"></rect>
+            <text x="40" y="58" fill="currentColor" font-size="14">Your laptop (Git)</text>
+            <circle cx="70" cy="100" r="10" fill="#60a5fa"></circle>
+            <circle cx="120" cy="100" r="10" fill="#60a5fa"></circle>
+            <circle cx="170" cy="100" r="10" fill="#60a5fa"></circle>
+            <line x1="80" y1="100" x2="110" y2="100" stroke="currentColor" stroke-width="3"></line>
+            <line x1="130" y1="100" x2="160" y2="100" stroke="currentColor" stroke-width="3"></line>
+            <text x="55" y="130" fill="currentColor" font-size="11">commits on main</text>
+            <path d="M270 90 H360" stroke="currentColor" stroke-width="3" marker-end="url(#arrow)"></path>
+            <text x="290" y="78" fill="currentColor" font-size="12">git push</text>
+            <rect x="380" y="30" width="240" height="120" rx="14" fill="currentColor" opacity=".08"></rect>
+            <text x="400" y="58" fill="currentColor" font-size="14">GitHub (remote: origin)</text>
+            <circle cx="430" cy="100" r="10" fill="#2dd4bf"></circle>
+            <circle cx="480" cy="100" r="10" fill="#2dd4bf"></circle>
+            <circle cx="530" cy="100" r="10" fill="#2dd4bf"></circle>
+            <line x1="440" y1="100" x2="470" y2="100" stroke="currentColor" stroke-width="3"></line>
+            <line x1="490" y1="100" x2="520" y2="100" stroke="currentColor" stroke-width="3"></line>
+            <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="currentColor"></path></marker></defs>
+          </svg>
+          <figcaption>Local commits live on your machine until you push them to GitHub.</figcaption>
+        </figure>
+        <p><strong>Repository</strong> = project + history. <strong>Commit</strong> = snapshot + message. <strong>Branch</strong> = pointer to a commit line. <strong>Remote</strong> = named URL (usually <code>origin</code>). <strong>Fork</strong> = your copy of someone else’s GitHub repo.</p>
       </section>
 
-      <section id="setup" data-keywords="setup ssh pat token git config authenticate login">
+      <section id="setup" data-track="basics" data-keywords="setup ssh pat token git config authenticate">
         <h2>2. Setup</h2>
-        <h3>Create a GitHub account</h3>
-        <ol>
-          <li>Go to <a href="https://github.com/signup">github.com/signup</a>.</li>
-          <li>Verify email and enable <strong>two-factor authentication</strong> (Settings → Password and authentication).</li>
-        </ol>
-
-        <h3>Install Git and set identity</h3>
         <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git --version
 git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 git config --global init.defaultBranch main
-git config --global pull.rebase false
-git config --list --show-origin</code></pre></div>
-        <div class="callout tip"><strong>Tip</strong><p>Use the same email as your GitHub account (or a GitHub noreply address from Settings → Emails) so commits link to your profile.</p></div>
-
-        <h3>Authenticate: SSH keys (recommended)</h3>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># Generate a key (press Enter to accept defaults)
-ssh-keygen -t ed25519 -C "you@example.com"
-
-# Start agent and add key (macOS/Linux; Windows Git Bash similar)
+git config --global pull.rebase false</code></pre></div>
+        <h3>SSH (recommended)</h3>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>ssh-keygen -t ed25519 -C "you@example.com"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
-
-# Copy public key, then paste at GitHub → Settings → SSH and GPG keys
 cat ~/.ssh/id_ed25519.pub
-
-# Test
+# paste into GitHub → Settings → SSH and GPG keys
 ssh -T git@github.com</code></pre></div>
-        <p>Expected test reply includes something like: <em>Hi username! You’ve successfully authenticated…</em></p>
-
-        <h3>Authenticate: Personal Access Token (HTTPS)</h3>
-        <p>If you use HTTPS remotes, GitHub rejects account passwords. Create a fine-grained PAT: Settings → Developer settings → Personal access tokens.</p>
-        <p>Typical scopes for daily work: Contents (read/write), Metadata, Pull requests, Workflows (if you edit Actions).</p>
-        <div class="callout warn"><strong>Warning</strong><p>Never commit a token. Treat it like a password. Revoke it if it leaks.</p></div>
+        <div class="callout warn"><strong>Warning</strong><p>For HTTPS, use a Personal Access Token—not your GitHub password. Never commit tokens.</p></div>
+        <div class="check" data-check="setup">
+          <h4>Practice checklist</h4>
+          <label><input type="checkbox"> Git installed and <code>user.name</code> / <code>user.email</code> set</label>
+          <label><input type="checkbox"> SSH key added to GitHub (or PAT ready for HTTPS)</label>
+          <label><input type="checkbox"> <code>ssh -T git@github.com</code> succeeds</label>
+        </div>
       </section>
 
-      <section id="create-clone" data-keywords="create clone readme gitignore license init new repository">
+      <section id="create-clone" data-track="basics" data-keywords="create clone readme gitignore license init">
         <h2>3. Creating and cloning repos</h2>
-        <h3>Create on GitHub, then clone</h3>
-        <ol>
-          <li>GitHub → <strong>New repository</strong>.</li>
-          <li>Choose public/private, add a README if you want a non-empty start.</li>
-          <li>Clone locally:</li>
-        </ol>
         <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git clone git@github.com:USERNAME/REPO.git
-cd REPO</code></pre></div>
+cd REPO
 
-        <h3>Create locally, then push</h3>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>mkdir my-project
-cd my-project
+# or start local, then push
+mkdir my-project && cd my-project
 git init
 echo "# My Project" > README.md
 git add README.md
@@ -324,306 +274,333 @@ git commit -m "Initial commit: add README"
 git branch -M main
 git remote add origin git@github.com:USERNAME/REPO.git
 git push -u origin main</code></pre></div>
-
-        <h3>README, .gitignore, LICENSE</h3>
-        <ul>
-          <li><strong>README.md</strong> — what the project is, how to run it, links.</li>
-          <li><strong>.gitignore</strong> — files Git should not track (<code>node_modules/</code>, <code>.env</code>, build output).</li>
-          <li><strong>LICENSE</strong> — how others may use the code (MIT, Apache-2.0, etc.).</li>
-        </ul>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># Example .gitignore snippets
-.env
-.env.*
-node_modules/
-dist/
-__pycache__/
-*.log
-.DS_Store</code></pre></div>
-        <div class="callout tip"><strong>Tip</strong><p>GitHub’s “Add .gitignore” template when creating a repo is a good starting point for your language.</p></div>
+        <p>Add <strong>README.md</strong> (what/how), <strong>.gitignore</strong> (what not to track), and a <strong>LICENSE</strong> when others may use the code.</p>
       </section>
 
-      <section id="daily" data-keywords="status add commit push pull fetch log diff daily workflow">
+      <section id="daily" data-track="basics" data-keywords="status add commit push pull fetch log diff daily">
         <h2>4. Daily workflow</h2>
-        <p>Most days look like this: update → edit → stage → commit → push.</p>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git status                 # what changed?
-git pull                   # get latest from remote (if collaborating)
-# ... edit files ...
-git diff                   # unstaged changes
-git add path/to/file       # stage specific files
-# or: git add -p           # stage hunks interactively
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git status
+git pull
+# edit files...
+git diff
+git add path/to/file
 git commit -m "Fix login timeout on slow networks"
 git push
 git log --oneline --graph -n 15</code></pre></div>
-
-        <h3>status / add / commit</h3>
         <ul>
-          <li><code>git status</code> — staged vs unstaged vs untracked.</li>
-          <li><code>git add</code> — choose what goes into the next commit.</li>
-          <li><code>git commit</code> — record the snapshot with a clear message (focus on <em>why</em>).</li>
+          <li><code>fetch</code> downloads updates; <code>pull</code> fetches and integrates.</li>
+          <li><code>diff</code> / <code>diff --staged</code> show unstaged vs staged patches.</li>
         </ul>
-
-        <h3>push / pull / fetch</h3>
-        <ul>
-          <li><code>git push</code> — upload your commits to the remote branch.</li>
-          <li><code>git fetch</code> — download remote updates without merging.</li>
-          <li><code>git pull</code> — fetch + integrate into your current branch (merge by default with the config above).</li>
-        </ul>
-
-        <h3>log / diff</h3>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git log --oneline --decorate --graph --all
-git diff                   # working tree vs staging
-git diff --staged          # staging vs last commit
-git diff main...feature    # changes on feature since it diverged from main</code></pre></div>
+        <div class="check" data-check="daily">
+          <h4>Practice checklist</h4>
+          <label><input type="checkbox"> Make a tiny edit, commit with a clear message, and push</label>
+          <label><input type="checkbox"> Read <code>git log --oneline --graph</code> and recognize your commit</label>
+        </div>
       </section>
 
-      <section id="branching" data-keywords="branch merge rebase conflict feature">
+      <section id="branching" data-track="basics" data-keywords="branch merge rebase conflict feature diagram">
         <h2>5. Branching and merging</h2>
-        <h3>Feature branch workflow</h3>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git checkout main
-git pull
+        <figure class="diagram" aria-label="Feature branch diverging from main then merging back">
+          <svg viewBox="0 0 640 200" role="img" aria-label="Commit graph with main and feature branch">
+            <text x="24" y="28" fill="currentColor" font-size="13">main</text>
+            <circle cx="60" cy="70" r="9" fill="#60a5fa"></circle>
+            <circle cx="140" cy="70" r="9" fill="#60a5fa"></circle>
+            <circle cx="220" cy="70" r="9" fill="#60a5fa"></circle>
+            <circle cx="420" cy="70" r="9" fill="#60a5fa"></circle>
+            <circle cx="520" cy="70" r="9" fill="#60a5fa"></circle>
+            <line x1="69" y1="70" x2="131" y2="70" stroke="currentColor" stroke-width="3"></line>
+            <line x1="149" y1="70" x2="211" y2="70" stroke="currentColor" stroke-width="3"></line>
+            <line x1="229" y1="70" x2="411" y2="70" stroke="currentColor" stroke-width="3"></line>
+            <line x1="429" y1="70" x2="511" y2="70" stroke="currentColor" stroke-width="3"></line>
+            <text x="24" y="150" fill="currentColor" font-size="13">feature</text>
+            <circle cx="220" cy="150" r="9" fill="#2dd4bf"></circle>
+            <circle cx="320" cy="150" r="9" fill="#2dd4bf"></circle>
+            <path d="M220 79 V141" stroke="currentColor" stroke-width="3" fill="none"></path>
+            <line x1="229" y1="150" x2="311" y2="150" stroke="currentColor" stroke-width="3"></line>
+            <path d="M320 141 C320 100 420 100 420 79" stroke="currentColor" stroke-width="3" fill="none"></path>
+            <text x="250" y="135" fill="currentColor" font-size="11">work</text>
+            <text x="430" y="55" fill="currentColor" font-size="11">merge</text>
+          </svg>
+          <figcaption>Branch for work, then merge (or open a PR) back into <code>main</code>.</figcaption>
+        </figure>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git checkout main && git pull
 git checkout -b feature/add-search
-# work, commit...
+# commit work...
 git push -u origin feature/add-search</code></pre></div>
-
-        <h3>Merge vs rebase</h3>
-        <ul>
-          <li><strong>Merge</strong> — joins histories; preserves exact branch topology; safe and common on shared branches.</li>
-          <li><strong>Rebase</strong> — replays your commits on top of another branch; creates a linear history; avoid rebasing commits already pushed and used by others.</li>
-        </ul>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># Update feature with latest main via merge
-git checkout feature/add-search
-git fetch origin
-git merge origin/main
-
-# Or via rebase (local / your own branch)
-git fetch origin
-git rebase origin/main
-git push --force-with-lease   # only if you already pushed and rewrote history</code></pre></div>
-        <div class="callout warn"><strong>Warning</strong><p>Prefer <code>--force-with-lease</code> over <code>--force</code>. Never force-push to <code>main</code> on a shared team repo.</p></div>
-
-        <h3>Resolving conflicts</h3>
-        <ol>
-          <li>Git marks conflicted files.</li>
-          <li>Open each file; find <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> conflict markers; keep the correct code.</li>
-          <li>Stage and continue:</li>
-        </ol>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git status
-# edit conflicted files
-git add path/to/resolved-file
-git merge --continue          # after a merge
-# or: git rebase --continue   # after a rebase
-# abort if needed:
-# git merge --abort
-# git rebase --abort</code></pre></div>
+        <p><strong>Merge</strong> preserves topology. <strong>Rebase</strong> replays commits for a linear history—avoid rebasing shared commits; use <code>--force-with-lease</code> only on your branch if you must rewrite.</p>
+        <h3>Conflict example</h3>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+title = "Homepage"
+=======
+title = "Home"
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/rename
+# edit to the correct final lines, then:
+git add config.toml
+git merge --continue   # or: git rebase --continue</code></pre></div>
       </section>
 
-      <section id="pull-requests" data-keywords="pull request pr review squash merge rebase approve">
+      <section id="pull-requests" data-track="basics" data-keywords="pull request pr review squash merge">
         <h2>6. Pull requests</h2>
-        <p>A <strong>pull request (PR)</strong> proposes merging one branch into another and is the review surface for teams.</p>
-        <h3>Open a PR</h3>
-        <ol>
-          <li>Push your branch.</li>
-          <li>On GitHub: Compare &amp; pull request.</li>
-          <li>Write a clear title and summary: what changed, why, how to test.</li>
-          <li>Request reviewers; link issues with <code>Fixes #12</code>.</li>
-        </ol>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># With GitHub CLI (optional)
-gh pr create --title "Add search to sidebar" --body "$(cat <<'EOF'
-## Summary
-- Adds client-side search for guide sections
-
-## Test plan
-- [ ] Search filters sections
-- [ ] Mobile menu still works
-EOF
-)"</code></pre></div>
-
-        <h3>Reviewing and requesting changes</h3>
-        <ul>
-          <li>Comment on lines; ask questions; suggest patches.</li>
-          <li>Approve, comment, or request changes.</li>
-          <li>Author pushes new commits to the same branch; the PR updates automatically.</li>
-        </ul>
-
-        <h3>Merge strategies</h3>
+        <p>A PR proposes merging a branch and is where review happens. Push your branch → open PR → describe what/why/how to test → request reviewers.</p>
         <table>
-          <thead><tr><th>Strategy</th><th>What it does</th><th>When to use</th></tr></thead>
+          <thead><tr><th>Merge strategy</th><th>Use when</th></tr></thead>
           <tbody>
-            <tr><td>Create a merge commit</td><td>Keeps all commits + a merge commit</td><td>Want full history of the branch</td></tr>
-            <tr><td>Squash and merge</td><td>Combines PR into one commit on main</td><td>Clean main history; noisy feature commits</td></tr>
-            <tr><td>Rebase and merge</td><td>Replays commits onto main, no merge commit</td><td>Linear history; commits already tidy</td></tr>
+            <tr><td>Merge commit</td><td>Keep full branch history</td></tr>
+            <tr><td>Squash and merge</td><td>Want one clean commit on main</td></tr>
+            <tr><td>Rebase and merge</td><td>Linear history; commits already tidy</td></tr>
           </tbody>
         </table>
       </section>
 
-      <section id="collaboration" data-keywords="fork upstream issues labels milestones assignees projects mention">
+      <section id="collaboration" data-track="basics" data-keywords="fork upstream issues labels milestones projects">
         <h2>7. Collaboration</h2>
-        <h3>Forks and upstream</h3>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git clone git@github.com:YOU/forked-repo.git
-cd forked-repo
-git remote add upstream git@github.com:ORIGINAL/OWNER-REPO.git
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git remote add upstream git@github.com:ORIGINAL/REPO.git
 git fetch upstream
 git checkout main
 git merge upstream/main
 git push origin main</code></pre></div>
-
-        <h3>Issues, labels, milestones, assignees</h3>
-        <ul>
-          <li><strong>Issues</strong> — bugs, tasks, discussions tracked on the repo.</li>
-          <li><strong>Labels</strong> — <code>bug</code>, <code>docs</code>, <code>good first issue</code>.</li>
-          <li><strong>Milestones</strong> — group issues toward a release date.</li>
-          <li><strong>Assignees</strong> — who’s responsible.</li>
-          <li><strong>Mentions</strong> — <code>@username</code> notifies someone in issues/PRs.</li>
-        </ul>
-
-        <h3>Projects boards</h3>
-        <p>GitHub Projects (board/table/roadmap) organize issues and PRs across statuses like Todo → In progress → Done. Link cards back to issues so status stays connected to real work.</p>
+        <p>Use <strong>Issues</strong> for work tracking, <strong>labels/milestones/assignees</strong> for triage, <code>@mentions</code> for attention, and <strong>Projects</strong> boards for Todo → Doing → Done.</p>
       </section>
 
-      <section id="undo" data-keywords="undo restore reset revert amend stash reflog">
+      <section id="undo" data-track="basics" data-keywords="undo restore reset revert amend stash reflog">
         <h2>8. Undoing things safely</h2>
-        <table>
-          <thead><tr><th>Goal</th><th>Safer command</th></tr></thead>
-          <tbody>
-            <tr><td>Discard unstaged edits in a file</td><td><code>git restore file</code></td></tr>
-            <tr><td>Unstage a file (keep edits)</td><td><code>git restore --staged file</code></td></tr>
-            <tr><td>Rewrite last commit message / add forgotten file (not pushed)</td><td><code>git commit --amend</code></td></tr>
-            <tr><td>Make a new commit that undoes an old one</td><td><code>git revert COMMIT</code></td></tr>
-            <tr><td>Move branch pointer (dangerous if shared)</td><td><code>git reset</code></td></tr>
-            <tr><td>Shelf work temporarily</td><td><code>git stash -u</code> then <code>git stash pop</code></td></tr>
-            <tr><td>Find “lost” commits</td><td><code>git reflog</code></td></tr>
-          </tbody>
-        </table>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># Safe undo of a bad commit already on main: revert
-git revert abc1234
-
-# Fix last commit before pushing
-git add forgotten.txt
-git commit --amend --no-edit
-
-# Stash and come back later
-git stash push -m "wip search"
-git stash list
-git stash pop
-
-# Recover after a bad reset
-git reflog
-git checkout -b recovery HEAD@{2}</code></pre></div>
-        <div class="callout warn"><strong>Warning</strong><p><code>git reset --hard</code> deletes uncommitted work. Prefer <code>restore</code>, <code>revert</code>, and <code>reflog</code> until you know you want destructive reset.</p></div>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git restore file                 # discard unstaged edits
+git restore --staged file        # unstage, keep edits
+git commit --amend               # fix last commit (if not shared)
+git revert abc1234               # undo with a new commit (safe on main)
+git stash -u && git stash pop
+git reflog                       # find “lost” commits</code></pre></div>
+        <div class="callout warn"><strong>Warning</strong><p><code>reset --hard</code> destroys uncommitted work. Prefer restore / revert / reflog until you’re sure.</p></div>
       </section>
 
-      <section id="actions" data-keywords="actions ci workflow yaml github actions">
+      <section id="actions" data-track="basics" data-keywords="actions ci workflow yaml">
         <h2>9. GitHub Actions basics</h2>
-        <p>Actions run workflows on GitHub’s runners when events happen (push, PR, schedule).</p>
-        <p>Create <code>.github/workflows/ci.yml</code>:</p>
         <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>name: CI
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-      - name: Install and test
-        run: |
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - run: |
           npm ci
           npm test</code></pre></div>
-        <div class="callout note"><strong>Note</strong><p>For a pure HTML guide repo, CI might simply check that <code>index.html</code> exists. Add real tests when you have an app.</p></div>
+        <p>Save as <code>.github/workflows/ci.yml</code>. Deeper patterns are in Advanced.</p>
       </section>
 
-      <section id="security" data-keywords="branch protection codeowners secrets dependabot 2fa security settings">
+      <section id="security" data-track="basics" data-keywords="branch protection codeowners secrets dependabot 2fa">
         <h2>10. Repo settings and security</h2>
         <ul>
-          <li><strong>2FA</strong> — turn on for your account; required by many orgs.</li>
-          <li><strong>Branch protection</strong> (Settings → Branches) — require PR reviews, status checks, prevent force-push to <code>main</code>.</li>
-          <li><strong>CODEOWNERS</strong> — auto-request reviewers for paths.</li>
-          <li><strong>Secrets</strong> — Settings → Secrets and variables → Actions. Never store secrets in git.</li>
-          <li><strong>Dependabot</strong> — automated dependency update PRs / alerts.</li>
+          <li>Enable <strong>2FA</strong> on your account.</li>
+          <li>Protect <code>main</code>: required reviews, required checks, no force-push.</li>
+          <li>Add <code>CODEOWNERS</code>, Actions <strong>secrets</strong>, and Dependabot alerts/updates.</li>
         </ul>
         <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># .github/CODEOWNERS
 *       @your-username
-/docs/  @docs-team-handle</code></pre></div>
+/docs/  @docs-team</code></pre></div>
       </section>
 
-      <section id="pages" data-keywords="github pages publish website static site">
+      <section id="pages" data-track="basics" data-keywords="github pages publish website">
         <h2>11. GitHub Pages</h2>
-        <p><strong>Why:</strong> host a static site (HTML/CSS/JS) directly from a repo—ideal for guides and docs.</p>
-        <h3>How (root of main)</h3>
         <ol>
-          <li>Put <code>index.html</code> at the repo root (this guide’s layout).</li>
-          <li>Add an empty <code>.nojekyll</code> file so GitHub doesn’t process files with Jekyll.</li>
-          <li>Settings → Pages → Build and deployment → Source: <strong>Deploy from a branch</strong>.</li>
-          <li>Branch: <code>main</code>, folder: <code>/ (root)</code> → Save.</li>
+          <li>Put <code>index.html</code> at repo root; add empty <code>.nojekyll</code>.</li>
+          <li>Settings → Pages → Deploy from branch → <code>main</code> / root.</li>
         </ol>
-        <p>Site URL pattern:</p>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>https://USERNAME.github.io/REPO_NAME/</code></pre></div>
-        <div class="callout tip"><strong>Tip</strong><p>On free accounts, Pages sites from user/org repos are public even if you later change some settings—don’t publish secrets in Pages content.</p></div>
-        <p>This guide’s published URL:</p>
-        <p><a href="https://krishant624.github.io/github-guide/">https://krishant624.github.io/github-guide/</a></p>
+        <p>URL shape: <code>https://USERNAME.github.io/REPO/</code> — this site: <a href="https://krishant624.github.io/github-guide/">https://krishant624.github.io/github-guide/</a></p>
       </section>
 
-      <section id="troubleshooting" data-keywords="troubleshooting rejected push detached head conflict auth failed error">
+      <section id="troubleshooting" data-track="basics" data-keywords="troubleshooting rejected push detached head conflict auth">
         <h2>12. Troubleshooting</h2>
-        <h3>Updates were rejected (push rejected)</h3>
-        <p>Remote has commits you don’t. Integrate first:</p>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git pull --rebase origin main
-# resolve conflicts if any
-git push</code></pre></div>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># push rejected → integrate first
+git pull --rebase origin main
+git push
 
-        <h3>Detached HEAD</h3>
-        <p>You checked out a commit, not a branch. Keep work by creating a branch:</p>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git switch -c recover-work
-git switch main</code></pre></div>
+# detached HEAD → keep work on a branch
+git switch -c recover-work
 
-        <h3>Merge conflicts</h3>
-        <p>Edit markers, <code>git add</code>, then <code>git merge --continue</code> or <code>git rebase --continue</code>. Abort with <code>--abort</code> if needed.</p>
-
-        <h3>Auth failures</h3>
-        <ul>
-          <li>SSH: <code>ssh -T git@github.com</code>; check key is added to agent and GitHub.</li>
-          <li>HTTPS: use a PAT, not your GitHub password; update stored credentials.</li>
-          <li>Wrong account: check <code>git remote -v</code> and SSH key associated with the right user.</li>
-        </ul>
-        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git remote -v
-git config user.email
-# Windows credential manager may cache an old PAT — update or remove it</code></pre></div>
+# auth
+ssh -T git@github.com
+git remote -v</code></pre></div>
+        <p>Conflicts: edit markers → <code>git add</code> → <code>merge --continue</code> / <code>rebase --continue</code> (or <code>--abort</code>).</p>
       </section>
 
-      <section id="cheatsheet" data-keywords="cheat sheet reference commands quick">
+      <section id="cheatsheet" data-track="basics" data-keywords="cheat sheet reference commands">
         <h2>13. Quick-reference cheat sheet</h2>
         <table>
           <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
           <tbody>
             <tr><td><code>git status</code></td><td>See changes</td></tr>
-            <tr><td><code>git add &lt;file&gt;</code></td><td>Stage file</td></tr>
-            <tr><td><code>git commit -m "msg"</code></td><td>Commit staged changes</td></tr>
-            <tr><td><code>git push</code> / <code>git pull</code></td><td>Upload / download+integrate</td></tr>
-            <tr><td><code>git fetch</code></td><td>Download without merging</td></tr>
-            <tr><td><code>git log --oneline --graph</code></td><td>View history</td></tr>
-            <tr><td><code>git diff</code> / <code>git diff --staged</code></td><td>See patches</td></tr>
-            <tr><td><code>git switch -c feature/x</code></td><td>Create/switch branch</td></tr>
-            <tr><td><code>git merge main</code></td><td>Merge into current branch</td></tr>
-            <tr><td><code>git rebase main</code></td><td>Replay onto main</td></tr>
-            <tr><td><code>git restore &lt;file&gt;</code></td><td>Discard unstaged edits</td></tr>
-            <tr><td><code>git revert &lt;sha&gt;</code></td><td>Undo with new commit</td></tr>
-            <tr><td><code>git stash -u</code></td><td>Shelve work</td></tr>
-            <tr><td><code>git reflog</code></td><td>Find lost commits</td></tr>
-            <tr><td><code>git clone &lt;url&gt;</code></td><td>Copy a remote repo</td></tr>
-            <tr><td><code>git remote -v</code></td><td>List remotes</td></tr>
-            <tr><td><code>gh pr create</code></td><td>Open a pull request (CLI)</td></tr>
+            <tr><td><code>git add</code> / <code>commit</code> / <code>push</code> / <code>pull</code></td><td>Daily loop</td></tr>
+            <tr><td><code>git fetch</code> / <code>log</code> / <code>diff</code></td><td>Inspect</td></tr>
+            <tr><td><code>git switch -c feature/x</code></td><td>Branch</td></tr>
+            <tr><td><code>git merge</code> / <code>rebase</code></td><td>Integrate</td></tr>
+            <tr><td><code>git restore</code> / <code>revert</code> / <code>stash</code> / <code>reflog</code></td><td>Undo safely</td></tr>
+            <tr><td><code>gh pr create</code></td><td>Open a PR</td></tr>
           </tbody>
         </table>
       </section>
 
+      <!-- ========== ADVANCED ========== -->
+      <div class="adv-banner" id="advanced-start">
+        <strong>Advanced track</strong>
+        <p style="margin:.35rem 0 0;color:var(--text)">Use this after the basics feel comfortable. These tools save hours on real projects—and can hurt if used carelessly.</p>
+      </div>
+
+      <section id="adv-history" data-track="advanced" data-keywords="bisect worktree submodule sparse checkout signed commits lfs interactive rebase">
+        <h2>A1. History surgery &amp; power tools <span class="tag">Advanced</span></h2>
+        <h3>git bisect — find the breaking commit</h3>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git bisect start
+git bisect bad                # current commit is bad
+git bisect good v1.2.0        # known good tag/sha
+# Git checks out midpoints; test each time:
+git bisect good               # or: git bisect bad
+git bisect reset</code></pre></div>
+
+        <h3>Interactive rebase (cleanup before PR)</h3>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git fetch origin
+git rebase -i origin/main
+# In the editor: pick / squash / reword / drop
+git push --force-with-lease</code></pre></div>
+        <div class="callout warn"><strong>Warning</strong><p>Only rewrite history on branches you alone use.</p></div>
+
+        <h3>Worktrees, sparse checkout, submodules, LFS</h3>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># Second working directory, same repo
+git worktree add ../repo-hotfix hotfix/urgent
+
+# Partial clone of huge monorepo
+git clone --filter=blob:none --sparse git@github.com:ORG/mono.git
+cd mono
+git sparse-checkout set apps/web
+
+# Submodule (pin another repo)
+git submodule add git@github.com:ORG/lib.git libs/lib
+git submodule update --init --recursive
+
+# Large binaries
+git lfs install
+git lfs track "*.psd"
+git add .gitattributes</code></pre></div>
+
+        <h3>Signed commits</h3>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git config --global commit.gpgsign true
+# or SSH signing:
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/id_ed25519.pub</code></pre></div>
+      </section>
+
+      <section id="adv-actions" data-track="advanced" data-keywords="actions matrix environments oidc cache artifacts reusable workflow">
+        <h2>A2. Actions beyond “hello CI” <span class="tag">Advanced</span></h2>
+        <h3>Matrix builds</h3>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci && npm test</code></pre></div>
+
+        <h3>Environments, secrets, OIDC (no long-lived cloud keys)</h3>
+        <p>Use Environments (<code>staging</code>/<code>production</code>) with required reviewers. Prefer OIDC to cloud providers instead of storing static access keys when possible.</p>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      id-token: write   # OIDC
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      # cloud login action using OIDC here
+      - run: ./deploy.sh</code></pre></div>
+
+        <h3>Caching &amp; artifacts</h3>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>- uses: actions/cache@v4
+  with:
+    path: ~/.npm
+    key: npm-${{ hashFiles('**/package-lock.json') }}
+- uses: actions/upload-artifact@v4
+  with:
+    name: build
+    path: dist/</code></pre></div>
+      </section>
+
+      <section id="adv-security" data-track="advanced" data-keywords="rulesets required reviews code scanning secret scanning security overlay">
+        <h2>A3. Hardening: rulesets &amp; scanning <span class="tag">Advanced</span></h2>
+        <ul>
+          <li><strong>Repository rulesets</strong> (newer than classic branch protection): block force-pushes, require linear history, require specific status checks.</li>
+          <li><strong>Required reviews</strong> + dismiss stale approvals on new commits.</li>
+          <li><strong>Secret scanning</strong> / push protection — blocks committing known secret patterns.</li>
+          <li><strong>Code scanning</strong> (CodeQL) — finds common vulnerabilities in PRs.</li>
+          <li><strong>Dependabot</strong> version updates + security updates.</li>
+        </ul>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># .github/dependabot.yml
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule: { interval: weekly }
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly }</code></pre></div>
+        <div class="callout tip"><strong>Tip</strong><p>Start with: 2FA + ruleset on main + required CI check + Dependabot. Add CodeQL when the repo has application code.</p></div>
+      </section>
+
+      <section id="adv-collab" data-track="advanced" data-keywords="code review stacked prs draft pr release notes conventional commits">
+        <h2>A4. Team workflows that scale <span class="tag">Advanced</span></h2>
+        <ul>
+          <li><strong>Draft PRs</strong> — share work early without requesting formal review.</li>
+          <li><strong>Stacked PRs</strong> — small sequential PRs (<code>feature/1</code> → <code>feature/2</code>) for faster review.</li>
+          <li><strong>Conventional Commits</strong> — <code>feat:</code>, <code>fix:</code>, <code>docs:</code> for clearer history and release notes.</li>
+          <li><strong>CODEOWNERS + branch rules</strong> — docs owned by docs folks, infra by platform.</li>
+          <li><strong>Releases</strong> — tag <code>v1.4.0</code>, generate notes from merged PRs.</li>
+        </ul>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>git tag -a v1.4.0 -m "v1.4.0"
+git push origin v1.4.0
+gh release create v1.4.0 --generate-notes</code></pre></div>
+        <div class="check" data-check="adv-collab">
+          <h4>Practice checklist</h4>
+          <label><input type="checkbox"> Open a draft PR and convert it to ready when review-ready</label>
+          <label><input type="checkbox"> Write one conventional commit message intentionally</label>
+        </div>
+      </section>
+
+      <section id="adv-github-cli" data-track="advanced" data-keywords="gh cli api scripting aliases">
+        <h2>A5. GitHub CLI (<code>gh</code>) power moves <span class="tag">Advanced</span></h2>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code>gh auth login
+gh repo view --web
+gh pr status
+gh pr checkout 42
+gh pr diff
+gh issue list --label bug
+gh api repos/{owner}/{repo}/commits --jq '.[].commit.message'
+gh alias set prc 'pr create --fill'</code></pre></div>
+        <p><code>gh api</code> is ideal for small automations without writing a full scripted client.</p>
+      </section>
+
+      <section id="adv-pages-custom" data-track="advanced" data-keywords="custom domain https actions pages monorepo docs">
+        <h2>A6. Pages, docs sites &amp; custom domains <span class="tag">Advanced</span></h2>
+        <ul>
+          <li><strong>Project site</strong> — <code>username.github.io/repo/</code> (this guide).</li>
+          <li><strong>User site</strong> — repo named <code>username.github.io</code> serves the root domain path.</li>
+          <li><strong>Custom domain</strong> — Settings → Pages → Custom domain; add DNS <code>CNAME</code>/<code>A</code> records; enable HTTPS.</li>
+          <li><strong>Actions-based Pages</strong> — build with a static site generator, upload artifact, deploy with <code>actions/deploy-pages</code>.</li>
+        </ul>
+        <div class="prewrap"><button class="copy-btn" type="button">Copy</button><pre><code># CNAME file at repo root for custom domain
+docs.example.com</code></pre></div>
+      </section>
+
       <footer>
-        <p>Built as a single offline-friendly HTML file. Source: <a href="https://github.com/krishant624/github-guide">krishant624/github-guide</a>.</p>
+        <p>Basics + Advanced in one offline HTML file. Source: <a href="https://github.com/krishant624/github-guide">krishant624/github-guide</a>. Progress and checklist state stay in localStorage on this device.</p>
       </footer>
     </main>
   </div>
@@ -632,15 +609,17 @@ git config user.email
 (function () {
   const root = document.documentElement;
   const toc = document.getElementById('toc');
-  const sections = [...document.querySelectorAll('main section[id]')];
   const burger = document.getElementById('burger');
   const sidebar = document.getElementById('sidebar');
   const backdrop = document.getElementById('backdrop');
   const themeToggle = document.getElementById('themeToggle');
   const q = document.getElementById('q');
   const results = document.getElementById('searchResults');
+  const progText = document.getElementById('progText');
+  const progBar = document.getElementById('progBar');
+  let track = localStorage.getItem('gh-guide-track') || 'all';
+  let sections = [];
 
-  // Theme
   function systemTheme() {
     return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
@@ -648,38 +627,72 @@ git config user.email
     root.setAttribute('data-theme', t);
     themeToggle.textContent = t === 'dark' ? 'Light' : 'Dark';
   }
-  const saved = localStorage.getItem('gh-guide-theme');
-  applyTheme(saved || systemTheme());
+  applyTheme(localStorage.getItem('gh-guide-theme') || systemTheme());
   themeToggle.addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     localStorage.setItem('gh-guide-theme', next);
     applyTheme(next);
   });
 
-  // TOC
-  sections.forEach((sec) => {
-    const h = sec.querySelector('h2');
-    if (!h) return;
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = '#' + sec.id;
-    a.textContent = h.textContent.replace(/^\d+\.\s*/, match => match);
-    a.dataset.target = sec.id;
-    li.appendChild(a);
-    toc.appendChild(li);
+  function visibleSections() {
+    return [...document.querySelectorAll('main section[id]')].filter((s) => !s.hidden);
+  }
+
+  function applyTrack(next) {
+    track = next;
+    localStorage.setItem('gh-guide-track', track);
+    document.querySelectorAll('.track-btn').forEach((b) => {
+      b.classList.toggle('active', b.dataset.track === track);
+    });
+    document.querySelectorAll('main section[id]').forEach((sec) => {
+      const t = sec.dataset.track || 'basics';
+      sec.hidden = !(track === 'all' || track === t);
+    });
+    const banner = document.getElementById('advanced-start');
+    if (banner) banner.style.display = track === 'basics' ? 'none' : '';
+    buildToc();
+    updateProgress();
+  }
+
+  document.querySelectorAll('.track-btn').forEach((b) => {
+    b.addEventListener('click', () => applyTrack(b.dataset.track));
   });
 
-  // Scroll spy
-  const tocLinks = [...toc.querySelectorAll('a')];
-  const spy = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      tocLinks.forEach((l) => l.classList.toggle('active', l.dataset.target === entry.target.id));
+  function buildToc() {
+    toc.innerHTML = '';
+    sections = visibleSections();
+    let lastGroup = '';
+    sections.forEach((sec) => {
+      const group = sec.dataset.track === 'advanced' ? 'Advanced' : 'Basics';
+      if (group !== lastGroup) {
+        const g = document.createElement('li');
+        g.className = 'group';
+        g.textContent = group;
+        g.setAttribute('aria-hidden', 'true');
+        toc.appendChild(g);
+        lastGroup = group;
+      }
+      const h = sec.querySelector('h2');
+      if (!h) return;
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#' + sec.id;
+      a.textContent = h.textContent.replace(/\s*Advanced\s*$/, '').trim();
+      a.dataset.target = sec.id;
+      li.appendChild(a);
+      toc.appendChild(li);
     });
-  }, { rootMargin: '-20% 0px -65% 0px', threshold: 0.01 });
-  sections.forEach((s) => spy.observe(s));
+    const tocLinks = [...toc.querySelectorAll('a')];
+    if (window._spy) window._spy.disconnect();
+    window._spy = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        tocLinks.forEach((l) => l.classList.toggle('active', l.dataset.target === entry.target.id));
+      });
+    }, { rootMargin: '-20% 0px -65% 0px', threshold: 0.01 });
+    sections.forEach((s) => window._spy.observe(s));
+  }
 
-  // Mobile nav
   function setOpen(open) {
     sidebar.classList.toggle('open', open);
     backdrop.classList.toggle('show', open);
@@ -688,11 +701,8 @@ git config user.email
   }
   burger.addEventListener('click', () => setOpen(!sidebar.classList.contains('open')));
   backdrop.addEventListener('click', () => setOpen(false));
-  toc.addEventListener('click', (e) => {
-    if (e.target.closest('a')) setOpen(false);
-  });
+  toc.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
 
-  // Copy buttons
   document.querySelectorAll('.prewrap').forEach((wrap) => {
     const btn = wrap.querySelector('.copy-btn');
     const code = wrap.querySelector('pre code');
@@ -709,35 +719,65 @@ git config user.email
     });
   });
 
-  // Search
+  // Checklists
+  document.querySelectorAll('.check[data-check]').forEach((box) => {
+    const key = 'gh-guide-check-' + box.dataset.check;
+    const saved = JSON.parse(localStorage.getItem(key) || '{}');
+    box.querySelectorAll('input[type=checkbox]').forEach((input, i) => {
+      input.checked = !!saved[i];
+      input.addEventListener('change', () => {
+        const state = {};
+        box.querySelectorAll('input[type=checkbox]').forEach((el, j) => { state[j] = el.checked; });
+        localStorage.setItem(key, JSON.stringify(state));
+        updateProgress();
+      });
+    });
+  });
+
+  function updateProgress() {
+    const secs = visibleSections();
+    if (!secs.length) { progText.textContent = '0%'; progBar.style.width = '0%'; return; }
+    let seen = 0;
+    const read = JSON.parse(localStorage.getItem('gh-guide-read') || '{}');
+    secs.forEach((s) => { if (read[s.id]) seen++; });
+    const pct = Math.round((seen / secs.length) * 100);
+    progText.textContent = pct + '%';
+    progBar.style.width = pct + '%';
+  }
+
+  const readSpy = new IntersectionObserver((entries) => {
+    const read = JSON.parse(localStorage.getItem('gh-guide-read') || '{}');
+    let changed = false;
+    entries.forEach((e) => {
+      if (e.isIntersecting && e.target.id) {
+        if (!read[e.target.id]) { read[e.target.id] = 1; changed = true; }
+      }
+    });
+    if (changed) {
+      localStorage.setItem('gh-guide-read', JSON.stringify(read));
+      updateProgress();
+    }
+  }, { threshold: 0.45 });
+  document.querySelectorAll('main section[id]').forEach((s) => readSpy.observe(s));
+
   function search(query) {
     const qq = query.trim().toLowerCase();
     results.innerHTML = '';
-    if (!qq) {
-      results.classList.remove('show');
-      return;
-    }
+    if (!qq) { results.classList.remove('show'); return; }
     const hits = [];
-    sections.forEach((sec) => {
+    visibleSections().forEach((sec) => {
       const title = sec.querySelector('h2')?.textContent || sec.id;
       const keywords = (sec.dataset.keywords || '') + ' ' + sec.textContent;
-      if (keywords.toLowerCase().includes(qq)) {
-        hits.push({ id: sec.id, title });
-      }
+      if (keywords.toLowerCase().includes(qq)) hits.push({ id: sec.id, title });
     });
     if (!hits.length) {
-      results.innerHTML = '<div style="padding:.9rem;color:var(--muted);font-size:.85rem">No matches</div>';
+      results.innerHTML = '<div style="padding:.85rem;color:var(--muted);font-size:.82rem">No matches in this track</div>';
     } else {
       hits.slice(0, 12).forEach((h) => {
         const a = document.createElement('a');
         a.href = '#' + h.id;
-        a.role = 'option';
-        a.textContent = h.title;
-        a.addEventListener('click', () => {
-          results.classList.remove('show');
-          q.value = '';
-          setOpen(false);
-        });
+        a.textContent = h.title.replace(/\s*Advanced\s*$/, '');
+        a.addEventListener('click', () => { results.classList.remove('show'); q.value = ''; setOpen(false); });
         results.appendChild(a);
       });
     }
@@ -745,14 +785,13 @@ git config user.email
   }
   q.addEventListener('input', () => search(q.value));
   q.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      results.classList.remove('show');
-      q.blur();
-    }
+    if (e.key === 'Escape') { results.classList.remove('show'); q.blur(); }
   });
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.search')) results.classList.remove('show');
   });
+
+  applyTrack(track);
 })();
 </script>
 </body>
